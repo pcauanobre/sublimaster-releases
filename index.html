@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubliMaster — Automação de Sublimação no CorelDRAW</title>
+<meta name="description" content="Automatize seu fluxo de sublimação: encaixe, repasse, exporte e imprima direto do CorelDRAW. Reduza horas de trabalho manual a minutos." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg:        '#0a0e13',
+          surface:   '#13181f',
+          surface2:  '#1c232c',
+          border:    '#262d36',
+          accent:    '#3b82f6',
+          accent2:   '#60a5fa',
+          text:      '#e6edf3',
+          textDim:   '#8b95a5',
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        animation: {
+          'fade-up': 'fadeUp 0.6s ease-out forwards',
+          'gradient': 'gradient 8s ease infinite',
+        },
+        keyframes: {
+          fadeUp: {
+            '0%': { opacity: 0, transform: 'translateY(20px)' },
+            '100%': { opacity: 1, transform: 'translateY(0)' },
+          },
+          gradient: {
+            '0%, 100%': { backgroundPosition: '0% 50%' },
+            '50%': { backgroundPosition: '100% 50%' },
+          },
+        },
+      },
+    },
+  };
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #0a0e13; color: #e6edf3; font-family: 'Inter', system-ui, sans-serif; }
+  .glow {
+    background: radial-gradient(circle at center, rgba(59,130,246,0.18), transparent 70%);
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(38,45,54,0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(38,45,54,0.4) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+  .gradient-text {
+    background: linear-gradient(120deg, #60a5fa, #a78bfa, #60a5fa);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient 8s ease infinite;
+  }
+  .feature-card {
+    background: linear-gradient(180deg, rgba(28,35,44,0.6), rgba(19,24,31,0.6));
+    border: 1px solid #262d36;
+    transition: all 0.3s ease;
+  }
+  .feature-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(59,130,246,0.3);
+  }
+  .btn-primary {
+    background: linear-gradient(120deg, #3b82f6, #6366f1);
+    transition: all 0.2s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(59,130,246,0.6);
+  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-bg/70 border-b border-border">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-purple-500 flex items-center justify-center font-bold">S</div>
+      <span class="font-semibold text-lg tracking-tight">SubliMaster</span>
+    </a>
+    <div class="flex items-center gap-6">
+      <a href="#funcionalidades" class="text-sm text-textDim hover:text-text transition hidden sm:block">Funcionalidades</a>
+      <a href="#como-funciona" class="text-sm text-textDim hover:text-text transition hidden sm:block">Como funciona</a>
+      <a href="https://github.com/pcauanobre/sublimaster-releases/releases/latest/download/SubliMaster-Setup.exe"
+         class="btn-primary text-white text-sm font-medium px-4 py-2 rounded-lg">
+        Baixar
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+  <div class="absolute inset-0 grid-bg"></div>
+  <div class="absolute inset-0 glow"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface/60 text-xs text-textDim mb-8 animate-fade-up">
+      <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+      Atualização automática · Versão mais recente sempre
+    </div>
+
+    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6 animate-fade-up" style="animation-delay:0.1s;">
+      Sublimação no CorelDRAW,<br>
+      <span class="gradient-text">10x mais rápido</span>
+    </h1>
+
+    <p class="text-lg md:text-xl text-textDim max-w-2xl mx-auto mb-10 animate-fade-up" style="animation-delay:0.2s;">
+      Encaixe, repasse, exporte e imprima — tudo automatizado.
+      Reduz horas de trabalho repetitivo a poucos cliques.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay:0.3s;">
+      <a href="https://github.com/pcauanobre/sublimaster-releases/releases/latest/download/SubliMaster-Setup.exe"
+         class="btn-primary text-white font-semibold px-8 py-4 rounded-xl text-base flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Baixar para Windows
+      </a>
+      <a href="#como-funciona"
+         class="border border-border bg-surface/50 hover:bg-surface px-8 py-4 rounded-xl text-base font-medium transition">
+        Ver como funciona
+      </a>
+    </div>
+
+    <p class="text-xs text-textDim mt-6 animate-fade-up" style="animation-delay:0.4s;">
+      Windows 10/11 · Requer CorelDRAW Graphics Suite · ~150 MB
+    </p>
+  </div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section id="funcionalidades" class="py-24 border-t border-border">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+        Tudo que você precisa, <span class="gradient-text">em um só lugar</span>
+      </h2>
+      <p class="text-textDim text-lg max-w-2xl mx-auto">
+        Funcionalidades pensadas pra quem trabalha com sublimação todos os dias.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="feature-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-xl mb-2">Encaixar</h3>
+        <p class="text-textDim leading-relaxed">
+          Algoritmo de nesting que organiza peças no menor espaço possível, automaticamente.
+          Economiza tecido e tempo.
+        </p>
+      </div>
+
+      <div class="feature-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-xl mb-2">Repassar</h3>
+        <p class="text-textDim leading-relaxed">
+          Transfere designs pra todas as partes do uniforme — frente, costas, mangas — com tolerância de tamanho.
+        </p>
+      </div>
+
+      <div class="feature-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-xl mb-2">Exportar</h3>
+        <p class="text-textDim leading-relaxed">
+          Exporta JPG/PNG com detecção automática, organiza por subpastas e nomeia tudo certinho.
+        </p>
+      </div>
+
+      <div class="feature-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-xl mb-2">Fila de Impressão</h3>
+        <p class="text-textDim leading-relaxed">
+          Gerencia a fila da plotter automaticamente, com cache persistente e modo automático.
+        </p>
+      </div>
+
+      <div class="feature-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-xl mb-2">Atualização automática</h3>
+        <p class="text-textDim leading-relaxed">
+          Você sempre roda a versão mais nova — o app se atualiza sozinho em segundo plano.
+        </p>
+      </div>
+
+      <div class="feature-card rounded-2xl p-7 reveal">
+        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-xl mb-2">Licença individual</h3>
+        <p class="text-textDim leading-relaxed">
+          Chave única vinculada à máquina. Sem instalações duplicadas, sem dor de cabeça.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="py-24 border-t border-border">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+        Comece em <span class="gradient-text">3 minutos</span>
+      </h2>
+    </div>
+
+    <div class="space-y-6">
+      <div class="reveal flex gap-6 items-start p-6 rounded-2xl border border-border bg-surface/50">
+        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center flex-shrink-0 font-bold text-accent">1</div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Baixe e instale</h3>
+          <p class="text-textDim">Clica no botão de download, executa o instalador. Em 2 cliques tá pronto — a macro do CorelDRAW é instalada automaticamente.</p>
+        </div>
+      </div>
+
+      <div class="reveal flex gap-6 items-start p-6 rounded-2xl border border-border bg-surface/50">
+        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center flex-shrink-0 font-bold text-purple-400">2</div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Insira sua chave</h3>
+          <p class="text-textDim">Abra o SubliMaster e digite a chave que você recebeu. A licença vincula à sua máquina automaticamente.</p>
+        </div>
+      </div>
+
+      <div class="reveal flex gap-6 items-start p-6 rounded-2xl border border-border bg-surface/50">
+        <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center flex-shrink-0 font-bold text-pink-400">3</div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Comece a produzir</h3>
+          <p class="text-textDim">Cole o arquivo CDR, clique no fluxo desejado e veja o CorelDRAW trabalhar sozinho. Encaixe, repasse e imprima.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="py-24 border-t border-border">
+  <div class="max-w-4xl mx-auto px-6 text-center reveal">
+    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+      Pronto pra acelerar<br>
+      sua <span class="gradient-text">produção?</span>
+    </h2>
+    <p class="text-textDim text-lg mb-10 max-w-xl mx-auto">
+      Baixe agora e comece a usar em poucos minutos.
+    </p>
+    <a href="https://github.com/pcauanobre/sublimaster-releases/releases/latest/download/SubliMaster-Setup.exe"
+       class="btn-primary text-white font-semibold px-10 py-5 rounded-xl text-lg inline-flex items-center gap-3">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+      </svg>
+      Baixar SubliMaster
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-border py-12">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-textDim">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded bg-gradient-to-br from-accent to-purple-500 flex items-center justify-center font-bold text-xs">S</div>
+      <span>SubliMaster &copy; 2026</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <a href="https://github.com/pcauanobre/sublimaster-releases/releases" class="hover:text-text transition">
+        Histórico de versões
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
+
+</body>
+</html>
