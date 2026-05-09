@@ -131,7 +131,7 @@
     </div>
 
     <p class="text-xs mt-6" style="color:#8b95a5;">
-      Windows 10/11 · Requer CorelDRAW Graphics Suite · <span id="versao-app">v...</span>
+      Windows 10/11 · Requer CorelDRAW Graphics Suite
     </p>
   </div>
 </section>
@@ -194,18 +194,6 @@
 
 <script>
   const DOWNLOAD_URL = "https://github.com/pcauanobre/sublimaster-releases/releases/latest/download/SubliMaster-Setup.exe";
-
-  // Busca a versão mais recente do GitHub e exibe na hero
-  fetch("https://api.github.com/repos/pcauanobre/sublimaster-releases/releases/latest")
-    .then(r => r.json())
-    .then(data => {
-      const el = document.getElementById("versao-app");
-      if (el && data && data.tag_name) el.textContent = data.tag_name;
-    })
-    .catch(() => {
-      const el = document.getElementById("versao-app");
-      if (el) el.textContent = "";
-    });
 
   function iniciarDownload() {
     // Dispara o download
