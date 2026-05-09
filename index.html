@@ -29,7 +29,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  /* ───────── BASE ───────── */
   html, body { height: 100%; }
   body {
     background: #060912;
@@ -38,11 +37,8 @@
     overflow: hidden;
     position: relative;
   }
-
-  /* ───────── BACKGROUND LAYERS ───────── */
   .bg-mesh {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background:
       radial-gradient(circle at 20% 30%, rgba(59,130,246,0.18), transparent 50%),
       radial-gradient(circle at 80% 70%, rgba(168,85,247,0.15), transparent 50%),
@@ -53,57 +49,39 @@
     0%, 100% { transform: scale(1) translate(0, 0); }
     50%      { transform: scale(1.1) translate(-2%, -2%); }
   }
-
   .grid-bg {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image:
       linear-gradient(rgba(38,45,54,0.35) 1px, transparent 1px),
       linear-gradient(90deg, rgba(38,45,54,0.35) 1px, transparent 1px);
     background-size: 40px 40px;
     mask-image: radial-gradient(ellipse 80% 60% at center, black 30%, transparent 75%);
   }
-
-  /* Floating particles */
   .particle {
-    position: absolute;
-    border-radius: 50%;
+    position: absolute; border-radius: 50%;
     background: radial-gradient(circle, rgba(96,165,250,0.6), transparent 70%);
-    filter: blur(1px);
-    animation: float linear infinite;
+    filter: blur(1px); animation: float linear infinite;
   }
   @keyframes float {
     0%   { transform: translateY(0) translateX(0); opacity: 0; }
-    10%  { opacity: 1; }
-    90%  { opacity: 1; }
+    10%  { opacity: 1; } 90% { opacity: 1; }
     100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
   }
-
-  /* ───────── TYPOGRAPHY ───────── */
   .gradient-text {
     background: linear-gradient(120deg, #60a5fa 0%, #a78bfa 35%, #ec4899 70%, #60a5fa 100%);
     background-size: 300% 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradientShift 6s ease infinite;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; animation: gradientShift 6s ease infinite;
   }
   @keyframes gradientShift {
     0%, 100% { background-position: 0% 50%; }
     50%      { background-position: 100% 50%; }
   }
-
-  /* ───────── ENTRANCES ───────── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(8px); }
     to   { opacity: 1; transform: translateY(0)    scale(1);    filter: blur(0); }
   }
-  .reveal {
-    opacity: 0;
-    animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  /* ───────── LOGO ───────── */
+  .reveal { opacity: 0; animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
   @keyframes float-y {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(-12px); }
@@ -115,40 +93,17 @@
       drop-shadow(0 10px 30px rgba(59,130,246,0.35))
       drop-shadow(0 30px 80px rgba(168,85,247,0.25));
   }
-
-  /* ───────── BUTTON ───────── */
   .btn-primary {
     position: relative;
     background: linear-gradient(120deg, #3b82f6, #6366f1, #8b5cf6);
     background-size: 200% 200%;
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow:
-      0 10px 30px -10px rgba(59,130,246,0.4),
-      inset 0 1px 0 rgba(255,255,255,0.15);
-  }
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
-    background-size: 200% 100%;
-    background-position: -100% 0;
-    transition: background-position 0.6s;
-    pointer-events: none;
+    box-shadow: 0 10px 30px -10px rgba(59,130,246,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
   }
   .btn-primary:hover {
-    transform: translateY(-3px);
-    background-position: 100% 50%;
-    box-shadow:
-      0 20px 50px -10px rgba(99,102,241,0.6),
-      inset 0 1px 0 rgba(255,255,255,0.25);
+    transform: translateY(-3px); background-position: 100% 50%;
+    box-shadow: 0 20px 50px -10px rgba(99,102,241,0.6), inset 0 1px 0 rgba(255,255,255,0.25);
   }
-  .btn-primary:hover::before {
-    background-position: 200% 0;
-  }
-
-  /* ───────── FAB WHATSAPP ───────── */
   .fab-whatsapp {
     background: #25D366;
     box-shadow: 0 12px 30px -5px rgba(37,211,102,0.5);
@@ -164,12 +119,47 @@
     100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
   }
   .fab-pulse { animation: pulse-ring 2.4s infinite; }
-
-  /* ───────── NAV ───────── */
   .nav-glass {
     backdrop-filter: blur(20px) saturate(180%);
     background: rgba(10, 14, 19, 0.6);
     border-bottom: 1px solid rgba(38, 45, 54, 0.6);
+  }
+
+  /* ───────── MODAL ───────── */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: bgIn 0.3s ease forwards;
+  }
+  .modal-backdrop.show { display: flex; }
+  @keyframes bgIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .modal-card {
+    background: linear-gradient(180deg, #131820, #0d1117);
+    border: 1px solid #262d36;
+    border-radius: 1.25rem;
+    max-width: 640px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.8);
+    animation: modalIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .step-num {
+    background: linear-gradient(120deg, #3b82f6, #8b5cf6);
+    box-shadow: 0 4px 12px -2px rgba(59,130,246,0.4);
   }
 </style>
 </head>
@@ -197,7 +187,7 @@
   </div>
 </nav>
 
-<!-- HERO (única seção) -->
+<!-- HERO -->
 <section class="relative h-screen flex items-center justify-center overflow-hidden">
   <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
 
@@ -215,14 +205,14 @@
     </p>
 
     <div class="flex justify-center reveal" style="animation-delay:0.8s;">
-      <a href="https://github.com/pcauanobre/sublimaster-releases/releases/latest/download/SubliMaster-Setup.exe"
+      <button onclick="abrirAvisoDownload()"
          class="btn-primary text-white font-semibold px-8 py-4 rounded-xl text-base flex items-center justify-center gap-2 overflow-hidden">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
         </svg>
         Baixar para Windows
-      </a>
+      </button>
     </div>
 
     <p class="text-xs text-textDim mt-6 reveal" style="animation-delay:1.0s;">
@@ -230,6 +220,72 @@
     </p>
   </div>
 </section>
+
+<!-- MODAL DE AVISO -->
+<div id="modalAviso" class="modal-backdrop" onclick="fecharAvisoSeFora(event)">
+  <div class="modal-card p-8 md:p-10">
+    <div class="flex items-start gap-4 mb-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center flex-shrink-0">
+        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <h3 class="text-2xl font-bold mb-1">Download iniciado!</h3>
+        <p class="text-sm text-textDim">Veja como liberar o app no Windows</p>
+      </div>
+      <button onclick="fecharAviso()" class="text-textDim hover:text-text transition" aria-label="Fechar">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-6">
+      <p class="text-sm leading-relaxed">
+        <strong class="text-blue-300">É normal o Windows mostrar um aviso azul</strong> ao abrir o instalador.
+        Como o app é novo, ele ainda não tem reputação no SmartScreen — mas é seguro.
+        Siga os 2 passos abaixo:
+      </p>
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <div class="flex gap-4 items-start">
+        <div class="step-num w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 font-bold text-white">1</div>
+        <div class="flex-1">
+          <p class="font-semibold mb-1">Clique em "Mais informações"</p>
+          <p class="text-sm text-textDim">Aparece logo abaixo do título "O Windows protegeu o computador".</p>
+          <img src="aviso-1.png" alt="Tela do SmartScreen passo 1" class="mt-3 rounded-lg border border-border w-full" />
+        </div>
+      </div>
+
+      <div class="flex gap-4 items-start">
+        <div class="step-num w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 font-bold text-white">2</div>
+        <div class="flex-1">
+          <p class="font-semibold mb-1">Clique em "Executar assim mesmo"</p>
+          <p class="text-sm text-textDim">
+            Confira que o fornecedor é <strong class="text-text">Pedro Cauã</strong>.
+            O instalador abre normalmente.
+          </p>
+          <img src="aviso-2.png" alt="Tela do SmartScreen passo 2" class="mt-3 rounded-lg border border-border w-full" />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a id="linkDownload"
+         href="https://github.com/pcauanobre/sublimaster-releases/releases/latest/download/SubliMaster-Setup.exe"
+         class="btn-primary text-white font-semibold px-6 py-3 rounded-xl text-sm flex items-center justify-center gap-2 flex-1">
+        Baixar de novo
+      </a>
+      <button onclick="fecharAviso()"
+              class="border border-border bg-surface hover:bg-surface/80 text-text font-medium px-6 py-3 rounded-xl text-sm transition">
+        Entendi
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- FAB WhatsApp -->
 <a href="https://wa.me/5585998175354?text=Olá! Tenho interesse no SubliMaster"
@@ -240,6 +296,34 @@
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 </a>
+
+<script>
+  const DOWNLOAD_URL = "https://github.com/pcauanobre/sublimaster-releases/releases/latest/download/SubliMaster-Setup.exe";
+
+  function abrirAvisoDownload() {
+    // Dispara o download imediato
+    const a = document.createElement('a');
+    a.href = DOWNLOAD_URL;
+    a.download = 'SubliMaster-Setup.exe';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    // Mostra modal com instruções
+    document.getElementById('modalAviso').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharAviso() {
+    document.getElementById('modalAviso').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  function fecharAvisoSeFora(e) {
+    if (e.target.id === 'modalAviso') fecharAviso();
+  }
+  // ESC fecha modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') fecharAviso();
+  });
+</script>
 
 </body>
 </html>
