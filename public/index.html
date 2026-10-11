@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SubliMaster — piloto automático para a sua estamparia</title>
+  <meta name="description" content="Repasse a arte pra todos os tamanhos, monte uniformes por lista, exporte peça por peça e organize a folha. Direto no CorelDRAW, sem macro.">
+  <link rel="icon" type="image/png" href="<%= BASE_URL %>logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- F5 sempre volta ao topo: a animação de entrada roda de novo -->
+  <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.addEventListener('beforeunload', function () { window.scrollTo(0, 0); });
+    window.addEventListener('load', function () { window.scrollTo(0, 0); });
+  </script>
+  <noscript>Ative o JavaScript para ver o site do SubliMaster.</noscript>
+  <div id="app"></div>
+</body>
+</html>
