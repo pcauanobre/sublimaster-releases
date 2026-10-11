@@ -86,7 +86,7 @@ watchEffect(() => document.documentElement.style.setProperty("--faixa", `${faixa
 
 // 2 s depois da animação de entrada, desce sozinho até a faixa recolhida,
 // mostrando abas + mockup inteiros. Só no PC e só se a pessoa não mexeu ainda.
-const ESPERA = 1300; // ~0,9 s de entrada + 0,4 s parado
+const ESPERA = 2600; // ~0,9 s de entrada + 1,7 s parado
 let timer = 0;
 let quadro = 0;
 let mexeu = false;
