@@ -34,13 +34,11 @@
           </span>
         </h1>
         <!-- botões só aparecem depois da descida automática (quem voltar pro topo vê) -->
-        <div v-if="mostrarBotoes" class="intro-sobe mt-7 grid w-full max-w-[440px] grid-cols-1 gap-2 sm:grid-cols-2">
+        <div v-if="mostrarBotoes" class="intro-sobe mt-7 flex justify-center">
           <button class="inline-flex items-center justify-center gap-2 rounded-xl bg-azul px-5 py-3 text-[14px] font-medium text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,.8)] transition hover:-translate-y-px hover:bg-[#2563EB]" @click="baixar">
-            Baixar para Windows<span class="h-4 w-4" v-html="ICONES.seta"></span>
+            {{ t("hero.baixar") }}<span class="h-4 w-4" v-html="ICONES.seta"></span>
           </button>
-          <a href="#teste" class="grid place-items-center rounded-xl bg-white px-5 py-3 text-[14px] font-medium text-ink transition hover:-translate-y-px">Testar 7 dias grátis</a>
         </div>
-        <p v-if="mostrarBotoes" class="intro-sobe mt-3 font-mono [animation-delay:.15s] text-[11px] text-white/45">Windows 10 e 11 · CorelDRAW 2020 a 2026 · sem macro</p>
       </div>
 
       <!-- título da faixa: entra desfocando quando o quadro termina de recolher -->
@@ -52,7 +50,7 @@
           class="text-center font-display text-[30px] leading-[1.02] text-white md:text-[46px]"
           :style="{ opacity: entrada, filter: `blur(${(1 - entrada) * 12}px)`, transform: `translateY(${(1 - entrada) * 12}px)` }"
         >
-          Automatize o repetitivo,<br />entregue o pedido<br /><span class="text-azul-claro">em segundos</span>
+          {{ t("hero.faixa")[0] }}<br />{{ t("hero.faixa")[1] }}<br /><span class="text-azul-claro">{{ t("hero.faixa")[2] }}</span>
         </h2>
       </div>
     </div>
@@ -65,6 +63,7 @@ import FundoPixel from "./FundoPixel.vue";
 import BarraTopo from "./BarraTopo.vue";
 import { baixar } from "../links";
 import { ICONES } from "../icones";
+import { t } from "../i18n";
 import { useEncolherAoRolar } from "../composables/useEncolherAoRolar";
 
 // altura da faixa recolhida: menu + título de três linhas
@@ -79,44 +78,67 @@ const faixa = computed(() => alturaFaixa(tela.value));
 const saida = computed(() => Math.max(0, 1 - progresso.value * 2.2));
 const entrada = computed(() => Math.min(1, Math.max(0, (progresso.value - 0.3) / 0.45)));
 
-const linhas = ["Piloto automático", "para o seu CorelDRAW.", "Entregue sem esforço"];
+const linhas = computed(() => t("hero.linhas"));
 
 // a seção de baixo usa a altura da faixa para caber inteira na tela
 watchEffect(() => document.documentElement.style.setProperty("--faixa", `${faixa.value}px`));
 
-// 2 s depois da animação de entrada, desce sozinho até a faixa recolhida,
-// mostrando abas + mockup inteiros. Só no PC e só se a pessoa não mexeu ainda.
-const ESPERA = 2600; // ~0,9 s de entrada + 1,7 s parado
+// Entrada do topo (só no PC): depois de ESPERA o site desce sozinho até as abas +
+// mockup. Se a pessoa tentar rolar antes, não rola livre: a descida começa na hora.
+const ESPERA = 2500; // ~0,9 s de entrada + 1,6 s parado
 let timer = 0;
 let quadro = 0;
-let mexeu = false;
+let travado = false;
 const mostrarBotoes = ref(false);
-const marcarMexeu = () => { mexeu = true; cancelAnimationFrame(quadro); mostrarBotoes.value = true; };
+
+const TECLAS = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " ", "Spacebar"];
+let desceu = false;
+const bloquear = (e) => {
+  if (e.type === "keydown" && !TECLAS.includes(e.key)) return;
+  e.preventDefault();
+  // tentou rolar: pula a espera e desce já
+  if (!desceu) { clearTimeout(timer); descer(); }
+};
+const EVENTOS = ["wheel", "touchmove", "keydown"];
+function travar() {
+  travado = true;
+  document.documentElement.style.overflow = "hidden";
+  EVENTOS.forEach((ev) => window.addEventListener(ev, bloquear, { passive: false }));
+}
+function destravar() {
+  if (!travado) return;
+  travado = false;
+  document.documentElement.style.overflow = "";
+  EVENTOS.forEach((ev) => window.removeEventListener(ev, bloquear));
+}
 
 function descer() {
-  if (mexeu || window.scrollY > 4 || window.innerWidth < 768) { mostrarBotoes.value = true; return; }
-  const alvo = tela.value - faixa.value;
+  if (desceu) return;
+  desceu = true;
+  if (window.innerWidth < 768) { mostrarBotoes.value = true; destravar(); return; }
+  // um pouco além da faixa recolhida: a janela do app (que passa do quadro) aparece inteira
+  const alvo = tela.value - faixa.value + Math.round(window.innerHeight * 0.1);
   const inicio = performance.now();
   const DURACAO = 750;
+  // o overflow travado impede o scrollTo: libera só o JS durante a descida
+  document.documentElement.style.overflow = "";
   const passo = (agora) => {
     const t = Math.min(1, (agora - inicio) / DURACAO);
     const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     window.scrollTo({ top: alvo * e, behavior: "instant" });
-    if (t < 1 && !mexeu) quadro = requestAnimationFrame(passo);
-    else mostrarBotoes.value = true;
+    if (t < 1) quadro = requestAnimationFrame(passo);
+    else { mostrarBotoes.value = true; destravar(); }
   };
   quadro = requestAnimationFrame(passo);
 }
 
-const EVENTOS = ["wheel", "touchstart", "keydown", "mousedown"];
 onMounted(() => {
-  EVENTOS.forEach((ev) => window.addEventListener(ev, marcarMexeu, { passive: true }));
-  if (window.innerWidth < 768) setTimeout(() => { mostrarBotoes.value = true; }, 1000);
+  if (window.innerWidth >= 768 && window.scrollY < 5) travar();
+  else mostrarBotoes.value = true;
   timer = setTimeout(descer, ESPERA);
 });
 onBeforeUnmount(() => {
   clearTimeout(timer);
   cancelAnimationFrame(quadro);
-  EVENTOS.forEach((ev) => window.removeEventListener(ev, marcarMexeu));
-});
-</script>
+  destravar();
+});</script>

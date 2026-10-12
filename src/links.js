@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { registrar } from "./metricas";
 
 export const DOWNLOAD_URL =
   "https://github.com/pcauanobre/sublimaster-releases/releases/latest/download/SubliMaster-Setup.exe";
@@ -27,14 +28,17 @@ export async function carregarVersao() {
   }
 }
 
-// todo botão de baixar leva pra página do recado; o download sai de lá
+// todo botão de baixar leva primeiro ao formulário da chave de teste;
+// depois de enviar, a pessoa cai na página do download
 // (import tardio: o router importa as páginas, que importam este arquivo)
 export async function baixar() {
+  registrar("clique_baixar");
   const { router } = await import("./router");
-  router.push({ name: "baixar" });
+  router.push({ name: "teste" });
 }
 
-export function iniciarDownload() {
+export function iniciarDownload(comoFoi = "auto") {
+  registrar("download", { det: comoFoi });
   const a = document.createElement("a");
   a.href = DOWNLOAD_URL;
   a.download = "SubliMaster-Setup.exe";

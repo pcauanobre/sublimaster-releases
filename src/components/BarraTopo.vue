@@ -12,9 +12,9 @@
     >
       <a
         v-for="(it, i) in itens"
-        :key="it.nome"
+        :key="it.chave"
         :href="`#${it.id}`"
-        :title="it.nome"
+        :title="it.nome()"
         class="grid h-8 w-8 animate-flutua place-items-center rounded-full transition-colors"
         :class="i === 0 ? 'bg-white text-ink' : 'text-white/70 hover:bg-white/10 hover:text-white'"
         :style="{ animationDelay: `${0.15 + i * 0.07}s` }"
@@ -22,24 +22,25 @@
         <span class="h-4 w-4" v-html="it.icone"></span>
       </a>
     </nav>
-
-    <a
-      href="#teste"
-      class="animate-foca rounded-full border border-azul/60 px-4 py-2 text-[13px] font-medium text-white transition hover:bg-azul [animation-delay:.5s]"
+    <!-- troca de idioma (o padrão vem do navegador) -->
+    <button
+      class="animate-foca rounded-full border border-white/15 px-4 py-2 text-[13px] font-medium text-white/85 transition hover:bg-white/10 [animation-delay:.5s]"
+      @click="alternarIdioma"
     >
-      Testar 7 dias
-    </a>
+      {{ t("idioma") }}
+    </button>
   </header>
 </template>
 
 <script setup>
 import { ICONES } from "../icones";
+import { t, alternarIdioma } from "../i18n";
 
 const itens = [
-  { id: "inicio", nome: "Início", icone: ICONES.grade },
-  { id: "recursos", nome: "Repassar", icone: ICONES.repassar },
-  { id: "recursos", nome: "Uniforme", icone: ICONES.uniforme },
-  { id: "recursos", nome: "Exportar", icone: ICONES.exportar },
-  { id: "baixar", nome: "Baixar", icone: ICONES.baixar },
+  { chave: "inicio", id: "inicio", nome: () => t("nav.inicio"), icone: ICONES.grade },
+  { chave: "Repassar", id: "recursos", nome: () => t("scripts.Repassar"), icone: ICONES.repassar },
+  { chave: "Uniforme", id: "recursos", nome: () => t("scripts.Uniforme"), icone: ICONES.uniforme },
+  { chave: "Exportar", id: "recursos", nome: () => t("scripts.Exportar"), icone: ICONES.exportar },
+  { chave: "baixar", id: "baixar", nome: () => t("nav.baixar"), icone: ICONES.baixar },
 ];
 </script>

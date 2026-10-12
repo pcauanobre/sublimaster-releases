@@ -5,17 +5,18 @@
     <div class="relative flex min-h-[calc(100svh-16px)] flex-col overflow-hidden rounded-frame text-white md:h-[calc(100vh-24px)] md:min-h-0">
       <FundoPixel />
 
-      <header class="relative z-20 flex shrink-0 items-center justify-between px-5 pt-5 md:px-7 md:pt-6">
+      <!-- só a marca, no centro (o logo leva de volta pro início) -->
+      <header class="relative z-20 flex shrink-0 items-center justify-center px-5 pt-5 md:pt-6">
         <RouterLink to="/" class="flex animate-foca items-center gap-2 text-[15px] font-semibold tracking-tight">
           <img src="/logo.png" alt="" class="h-7 w-7" />
           SubliMaster
         </RouterLink>
-        <RouterLink
-          to="/"
-          class="animate-foca rounded-full border border-white/15 px-4 py-2 text-[13px] font-medium text-white/80 transition hover:bg-white/10 [animation-delay:.2s]"
+        <button
+          class="absolute right-5 top-5 rounded-full border border-white/15 px-4 py-2 text-[13px] font-medium text-white/85 transition hover:bg-white/10 md:right-7 md:top-6"
+          @click="alternarIdioma"
         >
-          ← Voltar
-        </RouterLink>
+          {{ t("idioma") }}
+        </button>
       </header>
 
       <!-- espaço que sobra embaixo do topo: o conteúdo diminui até caber, sem rolagem -->
@@ -53,28 +54,29 @@
 
         <!-- recado + como passar pelo aviso -->
         <section class="flex flex-col">
-          <span class="animate-foca font-mono text-[11px] uppercase tracking-wider text-white/50 [animation-delay:.2s]">Antes de instalar</span>
+          <span class="animate-foca font-mono text-[11px] uppercase tracking-wider text-white/50 [animation-delay:.2s]">{{ t("baixar.rotulo") }}</span>
           <h1 class="mt-3 animate-foca font-display text-[40px] leading-[1.02] md:text-[60px] [animation-delay:.3s]">
-            Olá, eu sou o <span class="text-azul-claro">Pedro</span>
+            {{ t("baixar.ola") }} <span class="text-azul-claro">Pedro</span>
           </h1>
-          <p class="mt-2 animate-foca text-[15px] text-white/60 [animation-delay:.4s]">Produtor do SubliMaster.</p>
+          <p class="mt-2 animate-foca text-[15px] text-white/60 [animation-delay:.4s]">{{ t("baixar.produtor") }}</p>
 
           <div class="mt-6 space-y-4 text-[15px] leading-relaxed text-white/75">
             <p class="animate-foca [animation-delay:.5s]">
-              Como o SubliMaster é novo, o Windows ainda não conhece o programa. Por isso, na primeira instalação, ele mostra um aviso azul. É normal e só acontece uma vez.
+              {{ t("baixar.p1") }}
             </p>
             <p class="animate-foca [animation-delay:.6s]">
-              Pode ficar tranquilo: o SubliMaster não tem vírus e só trabalha dentro do seu CorelDRAW. Qualquer dúvida, me chama no WhatsApp que eu respondo pessoalmente.
+              {{ t("baixar.p2") }}
             </p>
           </div>
 
           <!-- janela animada, no formato real do aviso e na largura do texto -->
           <div class="mt-8 w-full animate-flutua [animation-delay:.7s]">
-            <DemoSmartScreen idioma="en" />
+            <!-- o aviso aparece no idioma do site (o mesmo do Windows, na maioria das vezes) -->
+            <DemoSmartScreen :idioma="idioma" />
           </div>
           <p class="mt-6 animate-foca text-center text-[13px] text-white/50 [animation-delay:.9s]">
-            O download não começou?
-            <button class="font-medium text-azul-claro underline underline-offset-2 hover:text-white" @click="iniciarDownload">Clique aqui</button>
+            {{ t("baixar.naoComecou") }}
+            <button class="font-medium text-azul-claro underline underline-offset-2 hover:text-white" @click="iniciarDownload('manual')">{{ t("baixar.cliqueAqui") }}</button>
           </p>
         </section>
       </div>
@@ -85,23 +87,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { t, idioma, alternarIdioma } from "../i18n";
 import FundoPixel from "../components/FundoPixel.vue";
 import DemoSmartScreen from "../components/DemoSmartScreen.vue";
 import { ICONES } from "../icones";
 import { useCaberNaTela } from "../composables/useCaberNaTela";
 import { iniciarDownload, zap, WHATSAPP, INSTAGRAM, PORTFOLIO } from "../links";
 
-const redes = [
+const redes = computed(() => [
   { nome: "Instagram", texto: "@pcauanobre", url: INSTAGRAM, icone: ICONES.instagram },
   {
     nome: "WhatsApp",
     texto: `(${WHATSAPP.slice(2, 4)}) ${WHATSAPP.slice(4, 9)}-${WHATSAPP.slice(9)}`,
-    url: zap("Oi Pedro! Vim pelo site do SubliMaster."),
+    url: zap(t("whatsMsg")),
     icone: ICONES.whats,
   },
-  { nome: "Portfólio", texto: "pedrocauanobre.is-a.dev", url: PORTFOLIO, icone: ICONES.globo },
-];
+  { nome: t("baixar.portfolio"), texto: "pedrocauanobre.is-a.dev", url: PORTFOLIO, icone: ICONES.globo },
+]);
 
 const espaco = ref(null);
 const conteudo = ref(null);
