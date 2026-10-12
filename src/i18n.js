@@ -104,7 +104,7 @@ export const TEXTOS = {
     },
     whatsAria: "Chat on WhatsApp",
     whatsMsg: "Hi Pedro! I came from the SubliMaster sales page and would like more information.",
-    idioma: "Português",
+    idioma: "English",
   },
   pt: {
     meta: { titulo: "SubliMaster" },
@@ -181,7 +181,7 @@ export const TEXTOS = {
     },
     whatsAria: "Falar no WhatsApp",
     whatsMsg: "Olá, Pedro! Vim pela página de vendas do SubliMaster e gostaria de ter mais informações.",
-    idioma: "English",
+    idioma: "Português",
   },
 };
 

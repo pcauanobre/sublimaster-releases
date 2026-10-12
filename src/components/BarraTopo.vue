@@ -25,9 +25,10 @@
     <!-- troca de idioma (o padrão vem do navegador) -->
     <button
       class="animate-foca rounded-full border border-white/15 px-4 py-2 text-[13px] font-medium text-white/85 transition hover:bg-white/10 [animation-delay:.5s]"
+      :title="t('idioma') === 'English' ? 'Mudar para português' : 'Switch to English'"
       @click="alternarIdioma"
     >
-      {{ t("idioma") }}
+      <span class="flex items-center gap-1.5"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg>{{ t("idioma") }}</span>
     </button>
   </header>
 </template>
