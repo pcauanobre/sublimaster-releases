@@ -154,6 +154,12 @@
 .toast-enter-active, .toast-leave-active { transition: opacity .3s cubic-bezier(.16,1,.3,1), transform .3s cubic-bezier(.16,1,.3,1); }
 .toast-enter-from, .toast-leave-to { opacity: 0; transform: translate3d(0, 16px, 0); }
 
+/* confirmação do /admin: fundo escurece, caixa sobe; fecha no mesmo efeito */
+.modal-adm-enter-active, .modal-adm-leave-active { transition: opacity .25s ease; }
+.modal-adm-enter-active .caixa-adm, .modal-adm-leave-active .caixa-adm { transition: transform .25s cubic-bezier(.16,1,.3,1); }
+.modal-adm-enter-from, .modal-adm-leave-to { opacity: 0; }
+.modal-adm-enter-from .caixa-adm, .modal-adm-leave-to .caixa-adm { transform: translate3d(0, 14px, 0) scale(.97); }
+
 /* barra da aba ativa enche no tempo da troca */
 @keyframes encher { from { width: 0 } to { width: 100% } }
 /* texto da aba: entra do cinza pro preto, como no layout de referência */

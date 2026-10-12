@@ -17,7 +17,7 @@ function idGuardado(armazem, chave) {
   }
 }
 
-const visitante = () => idGuardado(localStorage, "subli-visitante");
+export const visitante = () => idGuardado(localStorage, "subli-visitante");
 const sessao = () => idGuardado(sessionStorage, "subli-sessao");
 
 function dispositivo() {

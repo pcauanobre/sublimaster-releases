@@ -108,6 +108,16 @@ export function useAdmin() {
     }
   }
 
+  // ---------- excluir lead (e as visitas da mesma pessoa) ----------
+  async function excluirLead(lead) {
+    const mudancas = { [`leads/${lead.id}`]: null };
+    if (lead.v) eventosReais.value.filter((e) => e.v === lead.v).forEach((e) => { mudancas[`site/acessos/${e.id}`] = null; });
+    const r = await fetch(`${DB}/.json?auth=${token.value}`, { method: "PATCH", body: JSON.stringify(mudancas) });
+    if (!r.ok) throw new Error(String(r.status));
+    leadsReais.value = leadsReais.value.filter((l) => l.id !== lead.id);
+    if (lead.v) eventosReais.value = eventosReais.value.filter((e) => e.v !== lead.v);
+  }
+
   // ---------- recorte pelo período ----------
   const fonteLeads = computed(() => leadsReais.value);
   const fonteEventos = computed(() => eventosReais.value);
@@ -117,6 +127,6 @@ export function useAdmin() {
 
   return {
     token, entrando, erroLogin, carregando, erroDados, dias,
-    leads, eventos, fonteLeads, fonteEventos, entrar, retomar, sair, carregar,
+    leads, eventos, fonteLeads, fonteEventos, entrar, retomar, sair, carregar, excluirLead,
   };
 }

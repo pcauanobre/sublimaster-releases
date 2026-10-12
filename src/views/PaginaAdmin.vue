@@ -173,10 +173,18 @@
           <article v-for="l in leadsFiltrados.slice(0, mostrar)" :key="l.id" class="flex flex-col rounded-card border border-line p-4">
             <div class="flex items-start gap-3">
               <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-azul/10 text-[13px] font-semibold text-azul">{{ iniciais(l.nome) }}</span>
-              <div class="min-w-0">
+              <div class="min-w-0 flex-1">
                 <p class="truncate text-[14px] font-semibold">{{ l.nome }}</p>
                 <p class="text-[12px] text-muted">{{ quando(l.quando) }}</p>
               </div>
+              <button
+                class="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted transition hover:bg-[#fef2f2] hover:text-[#dc2626]"
+                :aria-label="`Excluir ${l.nome}`"
+                title="Excluir lead"
+                @click="paraExcluir = l"
+              >
+                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6" /></svg>
+              </button>
             </div>
             <dl class="mt-4 space-y-1.5 text-[13px]">
               <div class="flex gap-2"><dt class="w-[62px] shrink-0 text-muted">WhatsApp</dt><dd class="truncate font-mono">{{ telefone(l.contato) }}</dd></div>
@@ -197,6 +205,22 @@
         >Ver mais ({{ leadsFiltrados.length - mostrar }})</button>
       </section>
     </div>
+    <!-- confirmação de exclusão -->
+    <Transition name="modal-adm">
+      <div v-if="paraExcluir" class="fixed inset-0 z-[90] grid place-items-center bg-ink/50 p-4 backdrop-blur-sm" @click.self="paraExcluir = null">
+        <div class="caixa-adm w-full max-w-[400px] rounded-[22px] bg-white p-6 shadow-2xl" role="dialog" aria-modal="true">
+          <h3 class="font-display text-[22px] leading-tight">Excluir {{ paraExcluir.nome }}?</h3>
+          <p class="mt-2 text-[14px] leading-relaxed text-ink/60">O lead e as visitas dessa pessoa no site são apagados de vez. Não dá para desfazer.</p>
+          <div class="mt-6 grid grid-cols-2 gap-2">
+            <button class="rounded-xl border border-line py-2.5 text-[14px] font-medium transition hover:bg-panel" @click="paraExcluir = null">Cancelar</button>
+            <button class="rounded-xl bg-[#dc2626] py-2.5 text-[14px] font-semibold text-white transition hover:bg-[#b91c1c] disabled:opacity-60" :disabled="excluindo" @click="confirmarExclusao">
+              {{ excluindo ? "Excluindo..." : "Excluir" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
     <!-- toast de falha: canto de baixo, some sozinho ou no X -->
     <Transition name="toast">
       <div
@@ -218,12 +242,26 @@ import { ref, computed, onMounted } from "vue";
 import FundoPixel from "../components/FundoPixel.vue";
 import { useAdmin } from "../composables/useAdmin";
 
-const { token, entrando, erroLogin, carregando, erroDados, dias, leads, eventos, fonteLeads, fonteEventos, entrar, retomar, sair, carregar } = useAdmin();
+const { token, entrando, erroLogin, carregando, erroDados, dias, leads, eventos, fonteLeads, fonteEventos, entrar, retomar, sair, carregar, excluirLead } = useAdmin();
 
 const email = ref("");
 const senha = ref("");
 const busca = ref("");
 const dica = ref(null);
+const paraExcluir = ref(null);
+const excluindo = ref(false);
+async function confirmarExclusao() {
+  if (excluindo.value) return;   // trava duplo clique
+  excluindo.value = true;
+  try {
+    await excluirLead(paraExcluir.value);
+    paraExcluir.value = null;
+  } catch (e) {
+    erroDados.value = "Não consegui excluir agora. Tente de novo.";
+  } finally {
+    excluindo.value = false;
+  }
+}
 const mostrar = ref(24);   // cartões de lead visíveis; "Ver mais" abre mais 24
 const DIA = 86400000;
 

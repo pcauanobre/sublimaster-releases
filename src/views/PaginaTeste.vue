@@ -77,7 +77,7 @@ import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import FundoPixel from "../components/FundoPixel.vue";
 import { t, alternarIdioma } from "../i18n";
-import { registrar } from "../metricas";
+import { registrar, visitante } from "../metricas";
 
 const LEADS_URL = "https://sublimaster-e3704-default-rtdb.firebaseio.com/leads.json";
 const router = useRouter();
@@ -121,6 +121,8 @@ async function enviar() {
         nome: nome.value.slice(0, 80),
         contato: digitos,
         email: email.value.slice(0, 120),
+        // liga o lead às visitas dele (no /admin, excluir o lead apaga as duas coisas)
+        v: visitante().slice(0, 24),
         origem: "lp-teste",
         quando: { ".sv": "timestamp" },
       }),
