@@ -1,8 +1,8 @@
 <template>
   <!-- uma linha "Manual" ou "Com o SubliMaster": ícone, rótulo, valor e barra -->
   <div>
-    <div class="flex items-center justify-between" :class="subli ? 'text-[13px] font-semibold text-azul' : 'text-[13px] text-ink/70'">
-      <span class="flex items-center gap-1.5">
+    <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5" :class="subli ? 'text-[13px] font-semibold text-azul' : 'text-[13px] text-ink/70'">
+      <span class="flex shrink-0 items-center gap-1.5">
         <img v-if="subli" src="/logo.png" alt="" class="h-5 w-5" />
         <Hand v-else :size="15" :stroke-width="2" />
         {{ subli ? t("calc.subli") : t("calc.manual") }}

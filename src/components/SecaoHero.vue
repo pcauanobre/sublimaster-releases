@@ -20,11 +20,11 @@
         <div class="relative">
           <span class="intro-glow absolute inset-0 -z-10 scale-125 rounded-full bg-azul/50 blur-3xl"></span>
           <span class="intro-anel absolute inset-[-12%] -z-10 rounded-full border-2 border-azul-claro/70"></span>
-          <img src="/logo.png" alt="SubliMaster" class="intro-logo h-28 w-28 md:h-40 md:w-40" />
+          <img src="/logo.png" alt="SubliMaster" class="intro-logo h-24 w-24 md:h-40 md:w-40" />
         </div>
 
         <!-- título: cada linha sobe de trás de uma máscara -->
-        <h1 class="mt-5 font-display text-[36px] leading-[1.02] text-white sm:text-[46px] md:text-[68px]">
+        <h1 class="mt-5 font-display text-[31px] leading-[1.04] text-white sm:text-[46px] md:text-[68px]">
           <span v-for="(l, i) in linhas" :key="l" class="block overflow-hidden pb-[.08em]">
             <span
               class="intro-linha block"

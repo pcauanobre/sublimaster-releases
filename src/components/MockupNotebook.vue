@@ -40,7 +40,7 @@
             <!-- player: aparece com o mouse em cima ou com o vídeo parado -->
             <div
               class="absolute inset-x-0 bottom-0 flex items-center gap-3 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2 pt-6 transition-opacity duration-300"
-              :class="clicando ? 'pointer-events-none opacity-0' : tocando ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'"
+              :class="clicando ? 'pointer-events-none opacity-0' : tocando ? 'opacity-100 md:opacity-0 md:group-hover:opacity-100' : 'opacity-100'"
             >
               <button
                 class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/90 text-ink transition hover:bg-white"
@@ -61,6 +61,14 @@
                 <div class="absolute inset-y-0 left-0 rounded-full bg-azul" :style="{ width: `${progresso * 100}%` }"></div>
               </div>
               <span class="w-[74px] shrink-0 text-right font-mono text-[11px] text-white/80">{{ relogio(tempo) }} / {{ relogio(duracao) }}</span>
+              <!-- tela cheia (no celular o notebook fica pequeno) -->
+              <button
+                class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/30"
+                aria-label="Tela cheia"
+                @click="telaCheia"
+              >
+                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" /></svg>
+              </button>
             </div>
           </div>
         </div>        <!-- base: teclado visto de frente, sem a cara de MacBook -->
@@ -177,6 +185,15 @@ function aoClicou() {
   alvoClique.value = null;
   tela.value && tela.value.play().catch(() => {});
 }
+// abre o vídeo em tela cheia (iPhone usa o modo próprio do player)
+function telaCheia() {
+  const v = tela.value;
+  if (!v) return;
+  if (v.requestFullscreen) v.requestFullscreen().catch(() => {});
+  else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+  else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
+}
+
 function alternar() {
   const v = tela.value;
   if (!v || clicando.value) return;

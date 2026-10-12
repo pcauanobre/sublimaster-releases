@@ -6,17 +6,17 @@
       <FundoPixel />
 
       <!-- só a marca, no centro (o logo leva de volta pro início) -->
-      <header class="relative z-20 flex shrink-0 items-center justify-center px-5 pt-5 md:pt-6">
+      <header class="relative z-20 flex shrink-0 items-center justify-start px-5 pt-5 md:justify-center md:pt-6">
         <RouterLink to="/" class="flex animate-foca items-center gap-2 text-[15px] font-semibold tracking-tight">
           <img src="/logo.png" alt="" class="h-7 w-7" />
           SubliMaster
         </RouterLink>
         <button
-          class="absolute right-5 top-5 rounded-full border border-white/15 px-4 py-2 text-[13px] font-medium text-white/85 transition hover:bg-white/10 md:right-7 md:top-6"
+          class="absolute right-5 top-4 rounded-full border border-white/15 px-4 py-2 text-[13px] font-medium text-white/85 transition hover:bg-white/10 md:right-7 md:top-6"
           :title="t('idioma') === 'English' ? 'Mudar para português' : 'Switch to English'"
       @click="alternarIdioma"
         >
-          <span class="flex items-center gap-1.5"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg>{{ t("idioma") }}</span>
+          {{ t("idioma") }}
         </button>
       </header>
 

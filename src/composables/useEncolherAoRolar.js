@@ -33,7 +33,16 @@ export function useEncolherAoRolar(alturaFinal) {
     rolado.value = window.scrollY;
     if (!quadro) quadro = requestAnimationFrame(passo);
   };
-  const aoRedimensionar = () => { tela.value = window.innerHeight; acordar(); };
+  // no celular a barra de endereço some/aparece ao rolar e muda a altura: isso fazia o
+  // topo pular. Só recalcula quando a largura muda (girar o aparelho, redimensionar no PC).
+  let larguraAntes = typeof window === "undefined" ? 0 : window.innerWidth;
+  const aoRedimensionar = () => {
+    if (window.innerWidth !== larguraAntes || window.innerWidth >= 768) {
+      larguraAntes = window.innerWidth;
+      tela.value = window.innerHeight;
+    }
+    acordar();
+  };
 
   onMounted(() => {
     rolado.value = window.scrollY;

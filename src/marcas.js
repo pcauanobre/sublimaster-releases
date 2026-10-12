@@ -12,7 +12,7 @@ export const MARCAS_PADRAO = {
   // cresce, encolhe e entorta junto com a tela, o ponto fica sempre no mesmo lugar dele
   origem: { x: 8.2, y: 48.5 },
   // janela do app ao lado do notebook: tamanho, posição (px do palco) e inclinação (graus)
-  janela: { escala: 1.61, x: -123, y: -198, girarY: -12, girarX: 9, girarZ: 0.5 },
+  janela: { escala: 1.61, x: -123, y: -198, girarY: 0, girarX: 0, girarZ: 0 },
 };
 export const marcas = reactive({ ...MARCAS_PADRAO });
 
