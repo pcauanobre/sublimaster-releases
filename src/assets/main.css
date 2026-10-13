@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  html, body { overflow-x: hidden; max-width: 100%; }
+  /* overflow-x: clip (não hidden): hidden no html E no body fazia o body
+     virar uma 2ª área de rolagem, e o site ficava com dois scrolls */
+  html, body { overflow-x: clip; max-width: 100%; }
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: clip; }
   body { @apply bg-page font-sans text-ink antialiased; }
 }
