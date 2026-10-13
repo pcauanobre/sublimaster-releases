@@ -11,6 +11,9 @@ function inicial() {
   } catch (e) {
     /* sem armazenamento: segue pelo navegador */
   }
+  // robô de busca (Googlebot vem com navegador em inglês) lê a versão em português,
+  // que é a do público do site
+  if (/bot|crawl|spider|slurp|lighthouse/i.test(navigator.userAgent || "")) return "pt";
   const nav = (navigator.languages && navigator.languages[0]) || navigator.language || "en";
   return nav.toLowerCase().startsWith("pt") ? "pt" : "en";
 }
@@ -30,7 +33,7 @@ export function t(caminho) {
 
 export const TEXTOS = {
   en: {
-    meta: { titulo: "SubliMaster" },
+    meta: { titulo: "SubliMaster | CorelDRAW automation for sublimation" },
     app: { parar: "Stop Scripts", bandeja: "Minimize to Tray", direitos: "© 2026 SubliMaster. All rights reserved", licenca: "Lifetime license" },
     hero: {
       linhas: ["Autopilot", "for your CorelDRAW.", "Deliver effortlessly"],
@@ -107,7 +110,7 @@ export const TEXTOS = {
     idioma: "English",
   },
   pt: {
-    meta: { titulo: "SubliMaster" },
+    meta: { titulo: "SubliMaster | Automação para CorelDRAW na sublimação" },
     app: { parar: "Parar Scripts", bandeja: "Minimizar para Bandeja", direitos: "© 2026 SubliMaster. Todos os direitos reservados", licenca: "Licença vitalícia" },
     hero: {
       linhas: ["Piloto automático", "para o seu CorelDRAW.", "Entregue sem esforço"],

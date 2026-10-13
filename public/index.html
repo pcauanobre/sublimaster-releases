@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SubliMaster</title>
-  <meta name="description" content="Transfer art to every size, build uniforms from a list, export every piece and arrange the sheet. Right inside CorelDRAW, no macros.">
+  <title>SubliMaster | Automação para CorelDRAW na sublimação</title>
+  <meta name="description" content="Automação para CorelDRAW sem macro: repassa a arte para todos os tamanhos de molde, aplica nomes e números de uniforme a partir da lista, encaixa as peças na folha e exporta tudo em lote. Teste grátis.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="SubliMaster">
+  <meta property="og:title" content="SubliMaster | Automação para CorelDRAW na sublimação">
+  <meta property="og:description" content="Moldes em todos os tamanhos, nomes e números de uniforme, encaixe e exportação em lote, direto no CorelDRAW e sem macro.">
+  <meta property="og:image" content="<%= BASE_URL %>fundo-hero.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SubliMaster",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Windows 10, Windows 11",
+    "inLanguage": "pt-BR",
+    "description": "Automação para CorelDRAW na sublimação: repassa a arte para todos os tamanhos de molde, aplica nomes e números de uniforme, encaixa as peças na folha e exporta em lote, sem macro.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL", "description": "Teste grátis" }
+  }
+  </script>
   <link rel="icon" type="image/png" href="<%= BASE_URL %>logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +36,11 @@
     window.addEventListener('beforeunload', function () { window.scrollTo(0, 0); });
     window.addEventListener('load', function () { window.scrollTo(0, 0); });
   </script>
-  <noscript>Ative o JavaScript para ver o site do SubliMaster.</noscript>
+  <noscript>
+    <h1>SubliMaster: automação para CorelDRAW na sublimação</h1>
+    <p>Repassa a arte para todos os tamanhos de molde, aplica nomes e números de uniforme a partir da lista do cliente, encaixa as peças na folha para a plotter e exporta tudo em JPG, PNG ou PDF em lote. Funciona no CorelDRAW 2020 a 2026, sem macro, VBA ou plugin.</p>
+    <p>Ative o JavaScript para ver o site do SubliMaster.</p>
+  </noscript>
   <div id="app"></div>
 </body>
 </html>
